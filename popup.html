@@ -1,0 +1,83 @@
+<!doctype html>
+<html>
+
+<head>
+    <title>Backup Chatwork</title>
+    <link rel="stylesheet" href="/vendors/bootstrap-5.2.1/css/bootstrap.min.css">
+    <style>
+        main {
+            width: 450px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <main>
+        <div class="bg-dark text-secondary px-4 py-5 text-center">
+            <div class="py-5">
+                <h1 class="display-5 fw-bold text-white">Backup Chatwork</h1>
+                <div class="col-lg-6 mx-auto">
+                    <p class="fs-5 mb-4">This extension will analyze & backup chatwork</p>
+
+                    <div class="list-group w-auto mb-4 text-start">
+                        <a href="#" class="list-group-item list-group-item-action d-flex gap-3 py-3"
+                            aria-current="true">
+                            <img src="/images/number-1.png" alt="twbs" width="32" height="32"
+                                class="rounded-circle flex-shrink-0">
+                            <div class="d-flex gap-2 w-100 justify-content-between">
+                                <div>
+                                    <h6 class="mb-0">Must be logged</h6>
+                                    <p class="mb-0 opacity-75">Open new tab to login your chatwork</p>
+                                </div>
+                                <!-- <small class="opacity-50 text-nowrap">now</small> -->
+                            </div>
+                        </a>
+                        <a href="#" class="list-group-item list-group-item-action d-flex gap-3 py-3"
+                            aria-current="true">
+                            <img src="/images/number-2.png" alt="twbs" width="32" height="32"
+                                class="rounded-circle flex-shrink-0">
+                            <div class="d-flex gap-2 w-100 justify-content-between">
+                                <div>
+                                    <h6 class="mb-0">Must on Active Chatwork tab</h6>
+                                    <p class="mb-0 opacity-75">You must to move to chatwork tab</p>
+                                </div>
+                                <!-- <small class="opacity-50 text-nowrap">3d</small> -->
+                            </div>
+                        </a>
+                        <a href="#" class="list-group-item list-group-item-action d-flex gap-3 py-3"
+                            aria-current="true">
+                            <img src="/images/number-3.png" alt="twbs" width="32" height="32"
+                                class="rounded-circle flex-shrink-0">
+                            <div class="d-flex gap-2 w-100 justify-content-between">
+                                <div>
+                                    <h6 class="mb-0">Analyze & Backup</h6>
+                                    <p class="mb-0 opacity-75">When chatwork tab is actived then click on Button Analyze
+                                        now</p>
+                                </div>
+                                <!-- <small class="opacity-50 text-nowrap">1w</small> -->
+                            </div>
+                        </a>
+                    </div>
+
+                    <div id="alert-danger" class="alert alert-danger d-none" role="alert"></div>
+
+                    <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+                        <button id="btn-analyze" name="btn-analyze" type="button"
+                            class="btn btn-info btn-lg px-4 me-sm-3 fw-bold">Analyze</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+</body>
+
+<script src="/vendors/jquery-3.6.1/jquery-3.6.1.min.js"></script>
+<script src="/vendors/fetch/fetch.js"></script>
+<script src="/vendors/chatwok/chatwork.js"></script>
+<script src="/vendors/bootstrap-5.2.1/js/bootstrap.js"></script>
+<script src="/js/utils.js"></script>
+<script src="/js/popup.js"></script>
+
+</html>

@@ -1,0 +1,64 @@
+<!doctype html>
+<html>
+
+<head>
+    <title>Backup Chatwork</title>
+    <link rel="stylesheet" href="/vendors/bootstrap-5.2.1/css/bootstrap.min.css">
+    <style>
+        #wrapper-rooms {
+            max-height: 350px;
+            overflow: scroll;
+        }
+        .zindex-2 {
+            z-index: 2;
+        }
+    </style>
+</head>
+
+<body class="bg-dark">
+
+    <main>
+        <div class="text-secondary px-4 py-5 text-center">
+            <div class="py-5">
+                <h1 class="display-5 fw-bold text-white">Backup Chatwork</h1>
+                <p id="title-status" class="fs-5 mb-4">Choose the room(s) then click on button continue</p>
+
+                <div class="col-lg-6 mx-auto">
+                    <div id="alert-danger" class="alert alert-danger d-none" role="alert"></div>
+
+                    <div class="mb-3">
+                        <input name="filter-room-name" type="text" class="form-control form-control-lg"
+                            id="filter-room-name" placeholder="Filter room">
+                    </div>
+
+                    <div id="wrapper-rooms" class="list-group w-auto text-start mb-4">
+                        <div class="text-center">
+                            <div class="spinner-grow text-secondary" style="width: 3rem; height: 3rem;" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="wrapper-backup" class="d-grid gap-2">
+                        <button id="btn-backup" name="btn-backup" type="button"
+                            class="btn btn-info btn-block btn-lg px-4">Continue</button>
+                        <button id="btn-back" name="btn-back" type="button"
+                            class="btn btn-outline-light btn-block btn-lg px-4 d-none">Back</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+</body>
+
+<script src="/vendors/jquery-3.6.1/jquery-3.6.1.min.js"></script>
+<script src="/vendors/popper-2.11.6/popper.min.js"></script>
+<script src="/vendors/clipboard/clipboard-polyfill.js"></script>
+<script src="/vendors/fetch/fetch.js"></script>
+<script src="/vendors/chatwok/chatwork.js"></script>
+<script src="/vendors/bootstrap-5.2.1/js/bootstrap.min.js"></script>
+<script src="/js/utils.js"></script>
+<script src="/js/analyze.js"></script>
+
+</html>

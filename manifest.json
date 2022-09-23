@@ -1,0 +1,27 @@
+{
+    "manifest_version": 3,
+
+    "name": "Backup Chatwork",
+    "description": "This extension will analyze & backup your chatwork",
+    "author": "Phong Đỗ (https://github.com/phongdh-lftv)",
+    "version": "1.0",
+
+    "action": {
+        "default_popup": "popup.html"
+    },
+
+    "icons": {
+        "16": "images/icons/icon_16.png",
+        "32": "images/icons/icon_32.png",
+        "128": "images/icons/icon_128.png"
+    },
+
+
+    "host_permissions": [
+        "*://*.chatwork.com/"
+    ],
+
+    "permissions": [
+        "storage", "cookies", "scripting", "tabs"
+    ]
+}
