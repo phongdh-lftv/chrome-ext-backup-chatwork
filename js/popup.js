@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
         const tab = tabs[0];
 
-        if (/https:\/\/(www.)?chatwork.com\/.*/is.test(tab.url) == false) {
+        if (/https:\/\/(www.|go.)?chatwork.com\/.*/is.test(tab.url) == false) {
             $('#alert-danger').removeClass('d-none');
             $('#alert-danger').html('You must to move to chatwork tab.');
             return;
