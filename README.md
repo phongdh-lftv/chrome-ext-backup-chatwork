@@ -2,8 +2,14 @@ How to use
 ===
 ## `Chrome Extension: Backup Chatwork`
 
+## Download source code
+[Download here](https://github.com/phongdh-lftv/chrome-ext-backup-chatwork/archive/refs/heads/master.zip)
+
 ## How to load an unpacked extension
 https://developer.chrome.com/docs/extensions/mv3/getstarted/#unpacked
+
+## How to backup
+Watch: how-to-backup.mov
 
 ## Directory Hierarchy
 ```
