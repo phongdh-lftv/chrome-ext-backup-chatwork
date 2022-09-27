@@ -30,12 +30,34 @@ class Chatwork {
         return this.contacts;
     }
     getContactById(id) {
-        return this.contacts.filter((c, _) => c[0] == id);
+        var contact = this.contacts.filter((c, _) => c[0] == id);
+
+        return (contact.length > 0 ? contact[0][1] : null);
+    }
+    getContactByRid(id) {
+        var contact = this.contacts.filter((c, _) => c[1].rid == id);
+
+        return (contact.length > 0 ? contact[0][1] : null);
     }
     getRoomById(id) {
         var room = this.rooms.filter((r, _) => r[0] == id);
 
         return (room.length > 0 ? room[0][1] : null);
+    }
+    getRoomNameById(id) {
+        var r = this.getRoomById(id);
+        var roomName = r.n;
+
+        if (r.tp == 3) {
+            roomName = 'My Chat';
+        }
+
+        if (typeof roomName == 'undefined') {
+            var contact = cw.getContactByRid(id);
+            roomName = contact.name;
+        }
+
+        return roomName;
     }
     getMessageByRoomId(roomId) {
         if (!this.messages.hasOwnProperty(roomId)) {
@@ -47,9 +69,7 @@ class Chatwork {
     async initLoad() {
         var res = await this.callAPI(this.endpoints.initLoad);
 
-        this.rooms = $.grep(Object.entries(res.result.room_dat), function (n, _) {
-            return (n[1].hasOwnProperty('n') || n[1].tp == 3);
-        });
+        this.rooms = Object.entries(res.result.room_dat);
 
         this.contacts = Object.entries(res.result.contact_dat);
     }
@@ -84,8 +104,7 @@ class Chatwork {
 
         var chatMessages = chatList.filter(item => item.msg != null);
         chatMessages.forEach(item => {
-            var owner = this.getContactById(item.aid);
-            item.owner = owner.length > 0 ? owner[0][1] : null;
+            item.owner = this.getContactById(item.aid);
             messages[item.id] = item;
         });
 

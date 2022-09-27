@@ -48,33 +48,37 @@ const renderRoomsList = (rooms) => {
         wrapperRooms.html('');
 
         $(rooms).each(function (_, v) {
+            var r = v[1];
+            var roomId = v[0];
+            var roomName = cw.getRoomNameById(roomId);
+
             var room = `
             <div class="position-relative">
-                <div aria-status="${v[0]}" class="position-absolute top-0 end-0 mt-1 me-3 zindex-2">
+                <div aria-status="${roomId}" class="position-absolute top-0 end-0 mt-1 me-3 zindex-2">
                     <button id="btn-loading" class="btn btn-primary d-none" type="button" disabled>
                         <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                         <span class="visually-hidden">Loading...</span>
                     </button>
 
-                    <button id="btn-copy" aria-room-id="${v[0]}" class="btn btn-success pt-0 d-none" type="button">
+                    <button id="btn-copy" aria-room-id="${roomId}" class="btn btn-success pt-0 d-none" type="button">
                         <svg xmlns="http://www.w3.org/2000/svg" width="22" height="30" fill="currentColor" class="bi bi-clipboard" viewBox="0 0 16 16">
                             <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/>
                             <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/>
                         </svg>
                     </button>
 
-                    <a id="btn-download" aria-room-id="${v[0]}" class="btn btn-warning pt-0 d-none" type="button">
+                    <a id="btn-download" aria-room-id="${roomId}" class="btn btn-warning pt-0 d-none" type="button">
                         <svg xmlns="http://www.w3.org/2000/svg" width="22" height="30" fill="currentColor" class="bi bi-download" viewBox="0 0 16 16">
                             <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
                             <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/>
                         </svg>
                     </a>
                 </div>
-                <label aria-room-id="${v[0]}" class="list-group-item d-flex gap-3">
-                    <input name="chk-room-id[]" class="form-check-input flex-shrink-0" type="checkbox" value="${v[0]}"
+                <label aria-room-id="${roomId}" class="list-group-item d-flex gap-3">
+                    <input name="chk-room-id[]" class="form-check-input flex-shrink-0" type="checkbox" value="${roomId}"
                         style="font-size: 1.375em;">
                     <span id="span-room-name" class="pt-1 form-checked-content col-9">
-                        ${v[1].n || 'My Chat'}
+                        ${roomName}
                     </span>
                 </label>
             </div>
@@ -144,7 +148,7 @@ const backupStateHandler = async (roomId) => {
         btnCopy.removeClass('d-none');
         btnDownload.removeClass('d-none');
 
-        var room = cw.getRoomById(roomId);
+        var roomName = cw.getRoomNameById(roomId);
         var content = `[Description]\r\n${data.description}\r\n\r\n`;
 
         content += data.messages.map((m, _) => {
@@ -162,7 +166,7 @@ const backupStateHandler = async (roomId) => {
 
         var a = $('a[aria-room-id^=' + roomId + ']');
         a.attr('href', fileContent);
-        a.attr('download', ((room.n || 'My Chat') + '.txt'));
+        a.attr('download', (roomName + '.txt'));
     });
 }
 
