@@ -32,6 +32,11 @@ class Chatwork {
     getContactById(id) {
         return this.contacts.filter((c, _) => c[0] == id);
     }
+    getRoomById(id) {
+        var room = this.rooms.filter((r, _) => r[0] == id);
+
+        return (room.length > 0 ? room[0][1] : null);
+    }
     getMessageByRoomId(roomId) {
         if (!this.messages.hasOwnProperty(roomId)) {
             return [];
@@ -43,7 +48,7 @@ class Chatwork {
         var res = await this.callAPI(this.endpoints.initLoad);
 
         this.rooms = $.grep(Object.entries(res.result.room_dat), function (n, _) {
-            return n[1].hasOwnProperty('n');
+            return (n[1].hasOwnProperty('n') || n[1].tp == 3);
         });
 
         this.contacts = Object.entries(res.result.contact_dat);
@@ -73,7 +78,7 @@ class Chatwork {
             messages.sort((a, b) => a[0] - b[0]);
 
             this.messages[roomId]['messages'] = messages;
-            callback(messages);
+            callback(this.messages[roomId]);
             return;
         }
 
