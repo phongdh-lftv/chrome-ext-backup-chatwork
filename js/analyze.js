@@ -9,5 +9,6 @@ $(async () => {
     $('input[name="filter-room-name"]').keyup(onRoomNameFiltered);
     $('#btn-backup').click(onContinueButtonClicked);
     $('#btn-back').click(onBackButtonClicked);
+    $('#btn-check-group').click(onCheckGroupButtonClicked);
     $('#wrapper-rooms').on('click', '#btn-copy', onCopyButtonClicked);
 });

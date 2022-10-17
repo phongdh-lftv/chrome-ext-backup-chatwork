@@ -134,10 +134,11 @@ const continueStateHandler = (e, roomIds) => {
         $(e.currentTarget).text('Backup Now')
 
         $('#btn-back').removeClass('d-none');
+        $('#btn-check-group').addClass('d-none');
     }
 }
 
-const backupStateHandler = async (roomId) => {
+const backupStateHandler = async (roomId, addFileToZip) => {
     var wrapper = $('div[aria-status^=' + roomId + ']');
     var btnLoading = wrapper.find('#btn-loading').removeClass('d-none');
     var btnCopy = wrapper.find('#btn-copy').addClass('d-none');
@@ -149,6 +150,7 @@ const backupStateHandler = async (roomId) => {
         btnDownload.removeClass('d-none');
 
         var roomName = cw.getRoomNameById(roomId);
+        var filename = (roomName + '.txt');
         var content = `[Description]\r\n${data.description}\r\n\r\n`;
 
         content += data.messages.map((m, _) => {
@@ -166,7 +168,9 @@ const backupStateHandler = async (roomId) => {
 
         var a = $('a[aria-room-id^=' + roomId + ']');
         a.attr('href', fileContent);
-        a.attr('download', (roomName + '.txt'));
+        a.attr('download', filename);
+
+        addFileToZip(filename, content);
     });
 }
 
@@ -178,7 +182,26 @@ const onContinueButtonClicked = (e) => {
     if (typeof state == 'undefined' || state == false) {
         continueStateHandler(e, roomIds)
     } else {
-        $(roomIds).each((_, roomId) => backupStateHandler(roomId));
+        $('#btn-download-zip').addClass('d-none');
+        $('#btn-download-zip').attr('href', 'javascript:void(0);');
+
+        var zip = new JSZip();
+        var addFileToZip = (filename, content) => {
+            zip.file(filename, content);
+            
+            if (Object.entries(zip.files).length == roomIds.length) {
+                zip.generateAsync({
+                    type: "base64"
+                }).then(function (content) {
+                    var downloadZipBtn = $('#btn-download-zip');
+                    downloadZipBtn.attr('href', 'data:application/zip;base64,' + content);
+                    downloadZipBtn.attr('download', 'my-chatwork.zip');
+                    downloadZipBtn.removeClass('d-none');
+                });
+            }
+        }
+
+        $(roomIds).each((_, roomId) => backupStateHandler(roomId, addFileToZip));
     }
 }
 
@@ -192,6 +215,18 @@ const onBackButtonClicked = (e) => {
     $('#btn-backup').text('Continue');
 
     $(e.currentTarget).addClass('d-none');
+    $('#btn-check-group').removeClass('d-none');
+
+    $('#btn-download-zip').addClass('d-none');
+    $('#btn-download-zip').attr('href', 'javascript:void(0);');
+
+    // do filter group name
+    var keyword = ($('input[name="filter-room-name"]').val()).toLowerCase();
+    var elms = $('span[id="span-room-name"]');
+    elms.closest('div').addClass('d-none');
+    elms.filter((_, v) => {
+        return ($.trim($(v).text())).toLowerCase().includes(keyword)
+    }).closest('div').removeClass('d-none');
 }
 
 const onCopyButtonClicked = (e) => {
@@ -227,6 +262,15 @@ const onCopyButtonClicked = (e) => {
     }, () => alert('Failure to copy. Check permissions for clipboard'))
 }
 
+const onCheckGroupButtonClicked = (e) => {
+    var state = $(e.currentTarget).data('state');
+
+    var isFlag = (typeof state == 'undefined' || state == true);
+    $('input[type="checkbox"]').prop("checked", isFlag);
+
+    $(e.currentTarget).data('state', !isFlag);
+}
+
 global.scrapeThePage = scrapeThePage;
 global.getCWToken = getCWToken;
 global.getCWMyID = getCWMyID;
@@ -237,3 +281,4 @@ global.onRoomNameFiltered = onRoomNameFiltered;
 global.onContinueButtonClicked = onContinueButtonClicked;
 global.onBackButtonClicked = onBackButtonClicked;
 global.onCopyButtonClicked = onCopyButtonClicked;
+global.onCheckGroupButtonClicked = onCheckGroupButtonClicked;
